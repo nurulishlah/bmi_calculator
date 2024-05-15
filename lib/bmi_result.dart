@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BmiResult extends StatelessWidget {
   final bool isMale;
   final double height;
   final double weight;
+  final SharedPreferences prefs;
 
   const BmiResult({
     super.key,
     required this.isMale,
     required this.height,
     required this.weight,
+    required this.prefs,
   });
+
+  List<String> getPastCalculations() {
+    final history = prefs.getStringList('bmi_history') ?? [];
+    return history;
+  }
+
+  void saveCalculation(String calculation) {
+    final history = getPastCalculations();
+    history.add(calculation);
+    prefs.setStringList('bmi_history', history);
+  }
 
   double calculateBmi() {
     return weight / ((height / 100) * (height / 100));
