@@ -1,5 +1,6 @@
 import 'package:bmi_calculator/bmi_result.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserInput extends StatefulWidget {
   final String title;
@@ -13,6 +14,18 @@ class _UserInputState extends State<UserInput> {
   bool _isMale = true;
   double _height = 170.0;
   double _weight = 60.0;
+  List<String> _history = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getPastCalculations();
+  }
+
+  Future<void> _getPastCalculations() async {
+    final prefs = await SharedPreferences.getInstance();
+    _history = prefs.getStringList('bmi_history') ?? [];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +74,7 @@ class _UserInputState extends State<UserInput> {
                     isMale: _isMale,
                     height: _height,
                     weight: _weight,
+                    history: _history,
                   ),
                 ),
               ),
