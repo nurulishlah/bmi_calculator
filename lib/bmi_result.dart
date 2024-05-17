@@ -58,7 +58,7 @@ class BmiResult extends StatelessWidget {
   }
 
   Widget getIcon(String category) {
-    if (category == 'Slim') {
+    if (category == 'Underweight') {
       return const Icon(Icons.adjust, color: Colors.blue);
     } else if (category == 'Normal') {
       return const Icon(Icons.sentiment_satisfied, color: Colors.green);
